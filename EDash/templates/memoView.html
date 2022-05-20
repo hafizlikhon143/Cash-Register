@@ -1,0 +1,43 @@
+{% extends 'index.html' %}
+
+{% block main %}
+<div class="memo_view col-12 my-5">
+    <a href="/memo/page=1" class="btn btn-outline-primary mx-5">Back</a>
+    <div class="memo_main m-auto my-3" style="width: 900px">
+        <span class="fs-2 text-center text-light bg-primary d-flex justify-content-center">CASH MEMO</span>
+        <div class="row">
+            <div class="col-4 fs-6 d-flex justify-content-center"><div class="fw-bold">NO:&emsp;</div>{{cash_memo.id}}</div>
+            <div class="col-4 fs-6 d-flex justify-content-center"><div class="fw-bold">ADD:&emsp;</div>Address Sell Co.</div>
+            <div class="col-4 fs-6 d-flex justify-content-center"><div class="fw-bold">Date:&emsp;</div>{{cash_memo.date}}</div>
+        </div>
+        <div class="client_info row m-0 my-3 text-center">
+            <div class="col-12 d-flex my-2 fw-bold text-uppercase"><div class="fw-bold">Buyer's Name:&emsp;</div>{{cart.customer}}</div>
+            <div class="col-12 d-flex my-2 fw-bold text-uppercase"><div class="fw-bold">Phone:&emsp;</div>{{cart.phone_no}}</div>
+        </div>
+        <div class="product_cont col-11 m-auto my-3 row text-center">
+            <div class="col-2 bg-success text-light fw-bold border">Name</div>
+            <div class="col-2 bg-success text-light fw-bold border">Catagory</div>
+            <div class="col-3 bg-success text-light fw-bold border">Desc</div>
+            <div class="col-1 bg-success text-light fw-bold border">Qty</div>
+            <div class="col-2 bg-success text-light fw-bold border">Rate</div>
+            <div class="col-2 bg-success text-light fw-bold border">Amount</div>
+            {% for p in product %}  
+            <div class="col-2 text-dark fw-bold border">{{p.name}}</div>
+            <div class="col-2 text-dark fw-bold border">{{p.catagory}}</div>
+            <div class="col-3 text-dark fw-bold border">
+                {{p.desc}}
+            </div>
+            <div class="col-1 text-dark fw-bold border">{{p.qty_order}}</div>
+            <div class="col-2 text-dark fw-bold border">{{p.retail}}</div>
+            <div class="col-2 text-dark fw-bold border">{{p.total_ammount}}</div>
+            {% endfor %}
+            <div class="col-8 text-dark fw-bold border">TOTAL</div>
+            <div class="col-4 text-dark fw-bold border">{{total}}</div>
+        </div>
+        <div class="row my-5">
+            <div class="col-6 text-center" ><span style="border-top: 1px #000 solid;">Buyer Signature</span></div>
+            <div class="col-6 text-center" ><span style="border-top: 1px #000 solid;">Seller Signature</span></div>
+        </div>
+    </div>
+</div>
+{% endblock main %}

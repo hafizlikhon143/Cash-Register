@@ -1,0 +1,73 @@
+{% extends 'index.html' %}
+
+{% block main %}
+<div id="memo_cont" class="col-11 m-auto">
+    <a href="/" class="btn btn-outline-primary my-3">Back</a>
+    
+    <div class="fs-3 text-primary">Memo List</div>
+    <table class="table text-center">
+        <thead class="bg-success">
+            <tr class="text-light">
+                <th>ID</th>
+                <th>NAME</th>
+                <th>DATE</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for q in query %}              
+            <tr>
+                <td scope="row">{{q.id}}</td>
+                <td>
+                    <a href="/memo/{{q.id}}">{{q.name}}</a>
+                    {% if not "/update" in request.path %}
+                    <a href="{% url "Memo_Update" q.id %}" class="btn btn-warning mx-2 p-0">Update</a>
+                    {% endif %}
+                </td>
+                <td>{{q.date}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    {% if not "/update" in request.path %}
+    <div class="paginate-cont">
+        <a href="" class="paginate-link-prev btn btn-danger">prev</a>
+        {% for page in page_num %}
+        <a href="/memo/page={{page}}" class="paginate-link btn btn-primary">{{page}}</a>
+        {% endfor %}
+        <a href="" class="paginate-link-next btn btn-danger">next</a>
+    </div>
+    {% endif %}
+    
+    
+    {% if "/update" in request.path %}
+    <form action="{% url "Memo_Update" query.first.id %}" method="post" class="my-5 p-2 px-4 border border-dark">
+    {% else %}
+    <form action="/memo/page=1" method="post" class="my-5 p-2 px-4 border border-dark">
+    {% endif %}
+        <div class="fs-3 text-primary my-3">Create New Memo</div>
+        {% csrf_token %}
+        <label for="name" style="width: 100px">Name</label>{{form.name}} <br>
+        <label for="cart_no" style="width: 100px">Customer</label>{{form.cart_no}}<br>
+        
+        {% if not "/update" in request.path %}
+        <button type="submit" class="btn btn-primary my-2">ADD</button>
+        {% else %}
+        <button type="submit" class="btn btn-danger my-2">Update</button>
+        {% endif %}
+            
+    </form>
+</div>
+<script>
+    var page_num = "{{pages}}";
+    page_num = Number(page_num);
+    console.log(page_num);
+    var scrpits = document.createElement("script");
+
+
+    if(window.location.pathname.search("memo/") == 1){
+        scrpits.setAttribute("src", "/static/js/module/paginate.js")
+        document.body.append(scrpits);
+    }
+</script>
+{% endblock main %}

@@ -1,0 +1,8 @@
+@import url("/static/css/home.css");
+@import url("/static/css/products.css");
+:root{
+    --main-color: #02499b;
+    --secondary-color:#00A74F;
+    --dark-color: #202124;
+    --basic-border: 1px #000 solid;
+}

@@ -1,0 +1,77 @@
+{% extends 'index.html' %}
+
+{% block main %}
+<div class="cart-cont col-11 m-auto">
+    <a href="/" class="btn btn-outline-primary my-3">Back</a>
+    <table class="table" style="border: 1px #000 solid;width: 100%;text-align: center;">
+        <thead>
+            <tr>
+                <th>Cart ID</th>
+                <th>Cart Name</th>
+                <th>Phone No</th>
+                <th>Date added</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for c in query %}        
+            <tr>
+                <td scope="row">{{c.id}}</td>
+                <td><a href="/cart/{{c.id}}">{{c.customer}}</a></td>
+                <td>{{c.phone_no}}</td>
+                <td>{{c.date}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    {% if "carts/" in request.path %}    
+    <div class="paginate-cont">
+            
+        <a href="" class="paginate-link-prev btn btn-danger">prev</a>
+        {% for page in page_num %}
+        <a href="/carts/page={{page}}" class="paginate-link btn btn-primary">{{page}}</a>
+        {% endfor %}
+        <a href="" class="paginate-link-next btn btn-danger">next</a>
+    </div>
+    {% endif %}
+        
+    
+    <form method="post" style="border: 1px #000 solid;margin-top: 20px;padding: 10px 20px">
+        <h3>ADD CART</h3>
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit" class= "btn btn-primary">Submit</button>
+        
+        {% if "cart/" in request.path %}
+        {% for q in query %}
+        <a href="{{q.id}}/delete" class="btn btn-danger" onclick=validAct onreadystatechange=btnHide>Delete</a>
+        {% endfor %}
+        {% endif %}
+            
+    </form>
+</div>
+<script>
+    var page_num = "{{pages}}";
+    page_num = Number(page_num);
+</script>
+<script>
+    
+    function validAct(e){
+        e.preventDefault();
+        if(confirm("Are you sure want to delete") != true) window.location.reload();
+    }
+
+    function btnHide(e){
+        if(window.location.pathname.search("carts") == 1){
+            e.target.style.display = "none";
+        }
+    }
+    var scrpits = document.createElement("script");
+
+
+    if(window.location.pathname.search("carts") == 1){
+        scrpits.setAttribute("src", "/static/js/module/paginate.js")
+        document.body.append(scrpits);
+    }
+</script>
+{% endblock main %}

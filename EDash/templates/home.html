@@ -1,0 +1,62 @@
+{% extends "index.html" %}
+
+{% block main %}
+
+<div id="profile_cont">
+    <span class="b-header text-success">User Information</span>
+    <div id="user_info">
+        <div class="info_data">
+            <label for="firstname" class="info_data_label">First Name: </label>
+            <span class="info_data_value">{{request.user.first_name}} {{request.user.last_name}}</span>
+        </div>
+        <div class="info_data">
+            <label for="username" class="info_data_label">Status: </label>
+            <span class="info_data_value">{% if request.user.is_superuser %}ADMIN{% else %}STAFF{% endif %}</span>
+        </div>
+        <div class="info_data">
+            <label for="username" class="info_data_label">Username: </label>
+            <span class="info_data_value">{{request.user.username}}</span>
+        </div>
+        <div class="info_data">
+            <label for="email" class="info_data_label">Email: </label>
+            <span class="info_data_value">{{request.user.email}}</span>
+        </div>
+        <div class="info_data">
+            <label for="last_login" class="info_data_label">Last Login: </label>
+            <span class="info_data_value">{{request.user.last_login}}</span>
+        </div>
+    </div>
+    <span class="b-header text-success">Action's</span>
+    <div id="user_action">
+        <a href="/products" class="card">
+            <div class="card_title">Products</div>
+            <div class="card_body">
+                <span class="card_dt">TOTAL</span>
+                <span>{{total_product}}</span>
+            </div>
+        </a>
+        <a href="/carts/page=1" class="card">
+            <div class="card_title">Clients</div>
+            <div class="card_body">
+                <span class="card_dt">TOTAL</span>
+                <span>{{total_customer}}</span>
+            </div>
+        </a>
+        <a href="/catagorys/page=1" class="card">
+            <div class="card_title">Catagory</div>
+            <div class="card_body">
+                <span class="card_dt">TOTAL</span>
+                <span>{{total_catagory}}</span>
+            </div>
+        </a>
+        <a href="/add_product" class="card">
+            <div class="card_title">Add Product</div>
+            <div class="card_body">
+                <span class="card_dt">TOTAL</span>
+                <span>{{total_stock}}</span>
+            </div>
+        </a>
+    </div>
+</div>
+
+{% endblock main %}

@@ -1,0 +1,28 @@
+{% extends 'index.html' %}
+{% block links %}
+
+{% endblock links %}
+{% block main %}
+{% comment %} add Product Form {% endcomment %}
+<div id="addProductForm" class="col-11 m-auto">
+    <a href="/" class="btn btn-outline-primary mt-2 mb-2">Back</a>
+    <div class="fs-3 text-center text-light bg-success m-auto">Add New Product</div>
+    <form action="" method="post" class="col-6 m-auto mt-3">
+        {% csrf_token %}
+        <label for="name" class="text-primary text-uppercase">Name</label>
+        {{form.name}}
+        <label for="catagory" class="text-primary text-uppercase">catagory</label>
+        {{form.catagory}}
+        <label for="desc" class="text-primary text-uppercase">Description</label>
+        {{form.desc}}
+        <label for="qty" class="text-primary text-uppercase">Qty</label>
+        {{form.qty}}
+        <label for="m_price" class="text-primary text-uppercase">price</label>
+        {{form.m_price}}
+        <label for="retail" class="text-primary text-uppercase">retail</label>
+        {{form.retail}}
+        <button type="submit" class="btn btn-success d-flex m-auto px-5">Submit</button>
+    </form>
+</div>
+{% endblock main %}
+{% block scripts %}{% endblock scripts %}

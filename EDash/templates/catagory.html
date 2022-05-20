@@ -1,0 +1,57 @@
+{% extends 'index.html' %}
+
+
+{% block main %}
+<div class="catagory-cont col-11 m-auto">
+    <a href="/" class="btn btn-outline-primary my-3">Back</a>
+    <div class="fs-3">Catagories</div>
+    <div id="catagory_cont">
+        <table class="table text-center border border-dark">
+            <thead class="bg-success text-light">
+                <tr>
+                    <th class="border border-dark">ID</th>
+                    <th class="border border-dark">Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for q in query %}            
+                <tr>
+                    <td scope="row" class="border border-dark">{{q.id}}</td>
+                    <td class="border border-dark"><a href="/catagory/{{q.id}}">{{q.name}}</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+        {% if "catagorys/" in request.path %}    
+            <div class="paginate-cont my-3">
+                
+                <a href="" class="paginate-link-prev btn btn-danger">prev</a>
+                {% for page in page_num %}
+                <a href="/catagorys/page={{page}}" class="paginate-link btn btn-primary">{{page}}</a>
+                {% endfor %}
+                <a href="" class="paginate-link-next btn btn-danger">next</a>
+            </div>
+        {% endif %}
+    </div>
+    <form method="post" class="p-3 border border-dark">
+        {% csrf_token %}
+        <div class="fs-3 text-uppercase mt-3 mb-3">add catagory</div>
+        <label for="name" class="form-label col-12 text-primary text-uppercase">Name</label>
+        {{form.name}}
+        <button type="submit" class="btn btn-success">ADD</button>
+    </form>
+</div>
+<script>
+    var page_num = "{{pages}}";
+    var scrpits = document.createElement("script");
+
+
+    if(window.location.pathname.search("catagorys") == 1){
+        scrpits.setAttribute("src", "/static/js/module/paginate.js")
+        document.body.append(scrpits);
+    }
+
+    page_num = Number(page_num);
+</script>
+{% endblock main %}

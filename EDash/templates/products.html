@@ -1,0 +1,126 @@
+{% extends 'index.html' %}
+
+{% block main %}
+<div id="product_cont">
+    <a href="/" class="btn btn-primary mb-4">Back</a>
+
+    <table class="table" style="border: 1px #000 solid">
+        <h1 class="text-primary">
+            Product
+            {% if not "product/" in request.path %}                    
+
+            <a href="/add_product" class="btn btn-danger" style="padding: 0!important;height:fit-content!important">
+                +
+            </a>
+            {% else %}
+            {% for o in obj %}
+            <a href="/update_product/{{o.id}}" class="btn btn-danger" style="padding: 0!important;height:fit-content!important">
+                UPDATE
+            </a>
+            {% endfor %}
+            {% endif %}
+        </h1>
+        <div class="text-center bg-danger text-light" id="p_msg"></div>
+        <thead class="bg-success">
+            <tr class="text-light">
+                <th>Name</th>
+                <th>Catagories</th>
+                <th>Qty</th>
+                <th>Price</th>
+                <th>Retail</th>
+                
+                {% if not "product/" in request.path %}                    
+                <th>Action</th>
+                <th>Cart</th>
+                {% endif %}
+                    
+            </tr>
+        </thead>
+        <tbody>
+            {% for o in obj %}
+            <tr>
+                <td scope="row"><span class="td-inner"><a href="/product/{{o.id}}">{{o.name}}</a></span></td>
+                <td><span class="td-inner">{{o.catagory}}</span></td>
+                <td class="p_qty" data-id="{{o.id}}"><span class="td-inner">{{o.qty}}</span></td>
+                <td><span class="td-inner">{{o.m_price}}</span></td>
+                <td><span class="td-inner">{{o.retail}}</span></td>
+                {% if not "product/" in request.path %}
+                <td>
+                    <div class="action_row">
+                        <button type="button" class="btn btn-warning product_add_btn" data-id="{{o.id}}">Add</button>
+                        <input type="number" class="product_inp_qty" name="product_inp_qty" data-id="{{o.id}}" style="width: 70px;max-width: 100%;text-align:center;" default_value="0" placeholder="Enter the digit" />
+                    </div>
+                </td>
+                <td>
+                    <select name="cart" class="cart_form form-control" data-id="{{o.id}}">
+                        {% for c in cart %}
+                        <option value="{{c.id}}">{{c.customer}}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    
+    
+    {% if "products/" in request.path %}
+    <div class="paginate-cont">
+        
+        <a href="" class="paginate-link-prev btn btn-danger">prev</a>
+        {% for page in page_num %}
+        <a href="/products/page={{page}}" class="paginate-link btn btn-primary">{{page}}</a>
+        {% endfor %}
+        <a href="" class="paginate-link-next btn btn-danger">next</a>
+    </div>
+        
+    <table class="table2" style="border: 1px #000 solid">
+        <h1 class="text-primary">Order</h1>
+        <form method="post" id="order_form" action="">
+            {% csrf_token %}
+            <select name="cart_2" class="cart_form_2 form-control">
+                <option value="none">--Select--</option>
+                {% for c in cart %}
+                <option value="{{c.id}}">{{c.customer}}</option>
+                {% endfor %}
+            </select>
+        </form>
+        <thead class="bg-success">
+            <tr class="text-light">
+                <th>Name</th>
+                <th>Catagories</th>
+                <th>Qty</th>
+                <th>Price</th>
+                <th>Retail</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="order_table">
+            <tr>
+                <td colspan="6">Nothind Selected yet</td>
+            </tr>
+        </tbody>
+    </table>
+    {% endif %}
+        
+</div>
+{% endblock main %}
+{% block scripts %}
+<script src="/static/js/products.js"></script>
+<script src="/static/js/order.js"></script>
+<script src="/static/js/module/sendData.js"></script>
+<script>
+    var page_num = "{{pages}}";
+    page_num = Number(page_num);
+    console.log(page_num);
+    var scrpits = document.createElement("script");
+
+
+    if(window.location.pathname.search("products/") == 1){
+        scrpits.setAttribute("src", "/static/js/module/paginate.js")
+        document.body.append(scrpits);
+    }
+</script>
+{% endblock scripts %}

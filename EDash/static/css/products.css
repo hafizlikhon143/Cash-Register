@@ -1,0 +1,33 @@
+#product_cont{
+    width: 90%;
+    margin:50px auto;
+    font-size: 100%;
+}
+.product_add_btn{
+    padding: 2px 5px!important;
+    height: 100%;
+}
+.action_row{
+    display: flex;
+    margin: 7px auto;
+    justify-content: space-between;
+}
+.cart_form{
+    margin: 3px auto;
+}
+.cart_form_2{
+    margin: 10px 0px;
+}
+.table1, .table2{
+    width: 100%;
+}
+.table2 td, .table2 th{
+    padding: 10px 8px;
+    border-top: 1px #000 solid;
+    border-bottom: 1px #000 solid;
+}
+.td-inner{
+    display: flex;
+    margin: 10px 0px;
+    width: fit-content!important;
+}
